@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.nicespring.dao.PowerMapper">
+  <resultMap id="BaseResultMap" type="com.moyu.nicespring.entity.Power">
+    <id column="power_id" jdbcType="INTEGER" property="powerId" />
+    <result column="totalconsumption" jdbcType="DOUBLE" property="totalconsumption" />
+    <result column="subsidyconsumption" jdbcType="DOUBLE" property="subsidyconsumption" />
+    <result column="payconsumption" jdbcType="DOUBLE" property="payconsumption" />
+    <result column="freeconsumption" jdbcType="DOUBLE" property="freeconsumption" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="power_building_id" jdbcType="INTEGER" property="powerBuildingId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    power_id, totalconsumption, subsidyconsumption, payconsumption, freeconsumption, 
+    price, power_building_id
+  </sql>
+  <select id="selectByExample" parameterType="com.moyu.nicespring.entity.PowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from power
+    where power_id = #{powerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from power
+    where power_id = #{powerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyu.nicespring.entity.PowerExample">
+    delete from power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyu.nicespring.entity.Power">
+    insert into power (power_id, totalconsumption, subsidyconsumption, 
+      payconsumption, freeconsumption, price, 
+      power_building_id)
+    values (#{powerId,jdbcType=INTEGER}, #{totalconsumption,jdbcType=DOUBLE}, #{subsidyconsumption,jdbcType=DOUBLE}, 
+      #{payconsumption,jdbcType=DOUBLE}, #{freeconsumption,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, 
+      #{powerBuildingId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyu.nicespring.entity.Power">
+    insert into power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="powerId != null">
+        power_id,
+      </if>
+      <if test="totalconsumption != null">
+        totalconsumption,
+      </if>
+      <if test="subsidyconsumption != null">
+        subsidyconsumption,
+      </if>
+      <if test="payconsumption != null">
+        payconsumption,
+      </if>
+      <if test="freeconsumption != null">
+        freeconsumption,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="powerBuildingId != null">
+        power_building_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="powerId != null">
+        #{powerId,jdbcType=INTEGER},
+      </if>
+      <if test="totalconsumption != null">
+        #{totalconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="subsidyconsumption != null">
+        #{subsidyconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="payconsumption != null">
+        #{payconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="freeconsumption != null">
+        #{freeconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="powerBuildingId != null">
+        #{powerBuildingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyu.nicespring.entity.PowerExample" resultType="java.lang.Long">
+    select count(*) from power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update power
+    <set>
+      <if test="record.powerId != null">
+        power_id = #{record.powerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalconsumption != null">
+        totalconsumption = #{record.totalconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="record.subsidyconsumption != null">
+        subsidyconsumption = #{record.subsidyconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="record.payconsumption != null">
+        payconsumption = #{record.payconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="record.freeconsumption != null">
+        freeconsumption = #{record.freeconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.powerBuildingId != null">
+        power_building_id = #{record.powerBuildingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update power
+    set power_id = #{record.powerId,jdbcType=INTEGER},
+      totalconsumption = #{record.totalconsumption,jdbcType=DOUBLE},
+      subsidyconsumption = #{record.subsidyconsumption,jdbcType=DOUBLE},
+      payconsumption = #{record.payconsumption,jdbcType=DOUBLE},
+      freeconsumption = #{record.freeconsumption,jdbcType=DOUBLE},
+      price = #{record.price,jdbcType=DOUBLE},
+      power_building_id = #{record.powerBuildingId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyu.nicespring.entity.Power">
+    update power
+    <set>
+      <if test="totalconsumption != null">
+        totalconsumption = #{totalconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="subsidyconsumption != null">
+        subsidyconsumption = #{subsidyconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="payconsumption != null">
+        payconsumption = #{payconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="freeconsumption != null">
+        freeconsumption = #{freeconsumption,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="powerBuildingId != null">
+        power_building_id = #{powerBuildingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where power_id = #{powerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyu.nicespring.entity.Power">
+    update power
+    set totalconsumption = #{totalconsumption,jdbcType=DOUBLE},
+      subsidyconsumption = #{subsidyconsumption,jdbcType=DOUBLE},
+      payconsumption = #{payconsumption,jdbcType=DOUBLE},
+      freeconsumption = #{freeconsumption,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DOUBLE},
+      power_building_id = #{powerBuildingId,jdbcType=INTEGER}
+    where power_id = #{powerId,jdbcType=INTEGER}
+  </update>
+</mapper>

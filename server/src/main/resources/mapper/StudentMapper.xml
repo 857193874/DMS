@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.nicespring.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.moyu.nicespring.entity.Student">
+    <id column="student_username" jdbcType="VARCHAR" property="studentUsername" />
+    <result column="student_domitoryid" jdbcType="INTEGER" property="studentDomitoryid" />
+    <result column="student_password" jdbcType="VARCHAR" property="studentPassword" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_sex" jdbcType="VARCHAR" property="studentSex" />
+    <result column="student_class" jdbcType="VARCHAR" property="studentClass" />
+    <result column="student_state" jdbcType="VARCHAR" property="studentState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    student_username, student_domitoryid, student_password, student_name, student_sex, 
+    student_class, student_state
+  </sql>
+  <select id="selectByExample" parameterType="com.moyu.nicespring.entity.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectStudentKey"   resultType="java.lang.String">
+    select
+    student_username
+    from intelligentdorm.student
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_username = #{studentUsername,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student
+    where student_username = #{studentUsername,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyu.nicespring.entity.StudentExample">
+    delete from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyu.nicespring.entity.Student">
+    insert into student (student_username, student_domitoryid, 
+      student_password, student_name, student_sex, 
+      student_class, student_state)
+    values (#{studentUsername,jdbcType=VARCHAR}, #{studentDomitoryid,jdbcType=INTEGER}, 
+      #{studentPassword,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, #{studentSex,jdbcType=VARCHAR}, 
+      #{studentClass,jdbcType=VARCHAR}, #{studentState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyu.nicespring.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentUsername != null">
+        student_username,
+      </if>
+      <if test="studentDomitoryid != null">
+        student_domitoryid,
+      </if>
+      <if test="studentPassword != null">
+        student_password,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="studentSex != null">
+        student_sex,
+      </if>
+      <if test="studentClass != null">
+        student_class,
+      </if>
+      <if test="studentState != null">
+        student_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentUsername != null">
+        #{studentUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="studentDomitoryid != null">
+        #{studentDomitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="studentPassword != null">
+        #{studentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null">
+        #{studentSex,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass != null">
+        #{studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="studentState != null">
+        #{studentState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyu.nicespring.entity.StudentExample" resultType="java.lang.Long">
+    select count(*) from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student
+    <set>
+      <if test="record.studentUsername != null">
+        student_username = #{record.studentUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentDomitoryid != null">
+        student_domitoryid = #{record.studentDomitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentPassword != null">
+        student_password = #{record.studentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentName != null">
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentSex != null">
+        student_sex = #{record.studentSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentClass != null">
+        student_class = #{record.studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentState != null">
+        student_state = #{record.studentState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student
+    set student_username = #{record.studentUsername,jdbcType=VARCHAR},
+      student_domitoryid = #{record.studentDomitoryid,jdbcType=INTEGER},
+      student_password = #{record.studentPassword,jdbcType=VARCHAR},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      student_sex = #{record.studentSex,jdbcType=VARCHAR},
+      student_class = #{record.studentClass,jdbcType=VARCHAR},
+      student_state = #{record.studentState,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyu.nicespring.entity.Student">
+    update student
+    <set>
+      <if test="studentDomitoryid != null">
+        student_domitoryid = #{studentDomitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="studentPassword != null">
+        student_password = #{studentPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null">
+        student_sex = #{studentSex,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass != null">
+        student_class = #{studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="studentState != null">
+        student_state = #{studentState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_username = #{studentUsername,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyu.nicespring.entity.Student">
+    update student
+    set student_domitoryid = #{studentDomitoryid,jdbcType=INTEGER},
+      student_password = #{studentPassword,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      student_sex = #{studentSex,jdbcType=VARCHAR},
+      student_class = #{studentClass,jdbcType=VARCHAR},
+      student_state = #{studentState,jdbcType=VARCHAR}
+    where student_username = #{studentUsername,jdbcType=VARCHAR}
+  </update>
+</mapper>

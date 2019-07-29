@@ -1,0 +1,971 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "这是一个项目实例",
+    "version": "1.0",
+    "title": "宿舍管理系统接口"
+  },
+  "basePath": "/dms/api/v1",
+  "tags": [
+    {
+      "name": "Student",
+      "description": "学生用户接口"
+    },
+    {
+      "name": "Admin",
+      "description": "管理员用户接口"
+    },
+    {
+      "name": "Building",
+      "description": "宿舍楼管理接口"
+    },
+    {
+      "name": "Domitory",
+      "description": "宿舍管理接口"
+    },
+    {
+      "name": "Maintain",
+      "description": "维修管理接口"
+    },
+    {
+      "name": "Out",
+      "description": "外出管理接口"
+    },
+    {
+      "name": "Power",
+      "description": "电力管理接口"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/student/query/{studentUsername}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "获取学生详细信息",
+        "description": "传入学生用户名，获取学生详细信息",
+        "parameters": [
+          {
+            "name": "studentUsername",
+            "in": "path",
+            "description": "学生username",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/student/query/all": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "获取全部学生信息",
+        "description": "传入页码，获取学生详细信息，默认为1",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "pn",
+            "in": "query",
+            "description": "页码",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/student/save": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "添加学生信息",
+        "operationId": "saveStudent",
+        "description": "传入学生必要信息保存",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "studentUsername",
+            "in": "formData",
+            "description": "用户名（学号）",
+            "example": "152100666",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "studentDomitoryid",
+            "in": "formData",
+            "description": "宿舍ID（外键）",
+            "example": "1",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "studentPassword",
+            "in": "formData",
+            "description": "密码",
+            "example": "123456",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "studentName",
+            "in": "formData",
+            "description": "学生姓名",
+            "example": "庄三疯",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentSex",
+            "in": "formData",
+            "description": "性别",
+            "example": "男",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentClass",
+            "in": "formData",
+            "description": "班级",
+            "example": "15创世",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentState",
+            "in": "formData",
+            "description": "状态",
+            "example": "离校",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/student/del/{studentUsername}": {
+      "delete": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "删除学生信息",
+        "description": "传入学生用户名，删除学生信息",
+        "parameters": [
+          {
+            "name": "studentUsername",
+            "in": "path",
+            "description": "学生username",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/student/update/{studentUsername}": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "更新学生信息",
+        "description": "传入学生用户名及需更新项",
+        "parameters": [
+          {
+            "name": "studentUsername",
+            "in": "path",
+            "description": "学生username",
+            "required": true
+          },
+          {
+            "name": "studentDomitoryid",
+            "in": "formData",
+            "description": "宿舍ID（外键）",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "studentPassword",
+            "in": "formData",
+            "description": "密码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentName",
+            "in": "formData",
+            "description": "学生姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentSex",
+            "in": "formData",
+            "description": "性别",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentClass",
+            "in": "formData",
+            "description": "班级",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "studentState",
+            "in": "formData",
+            "description": "状态",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/student/login": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "学生登录",
+        "operationId": "loginStudent",
+        "description": "传入学生学号及密码",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "studentUsername",
+            "in": "formData",
+            "description": "用户名（学号）",
+            "example": "152100667",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "studentPassword",
+            "in": "formData",
+            "description": "密码",
+            "example": "123456",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/student/chacklogin": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "学生登录状态检测",
+        "operationId": "chackLoginStudent",
+        "description": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/student/logout": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "登出",
+        "operationId": "logoutStudent",
+        "description": "账户登出",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+
+    "/maintain/query/all": {
+      "get": {
+        "tags": [
+          "Maintain"
+        ],
+        "summary": "获取全部报修信息",
+        "description": "",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/maintain/query/domitoryid/{domitoryId}": {
+      "get": {
+        "tags": [
+          "Maintain"
+        ],
+        "summary": "获取某个宿舍报修信息",
+        "description": "传入宿舍ID，获取宿舍报修信息",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "domitoryId",
+            "in": "path",
+            "description": "宿舍domitoryId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/maintain/save": {
+      "post": {
+        "tags": [
+          "Maintain"
+        ],
+        "summary": "添加报修信息",
+        "operationId": "saveMaintain",
+        "description": "传入报修必要信息保存",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "domitoryId",
+            "in": "formData",
+            "description": "宿舍号",
+            "example": "1",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maintainTime",
+            "in": "formData",
+            "description": "报修时间",
+            "example": "Thu Mar 15 2018 11:01:14 GMT+0800",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "description": "修理状态",
+            "example": "保修",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+
+    "/out/query/all": {
+      "get": {
+        "tags": [
+          "Out"
+        ],
+        "summary": "获取全部外出信息",
+        "description": "传入页码，获取外出详细信息，默认为1",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "pn",
+            "in": "query",
+            "description": "页码",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/out/query/{outId}": {
+      "get": {
+        "tags": [
+          "Out"
+        ],
+        "summary": "获取外出信息",
+        "description": "传入外出ID，获取外出详细信息",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "outId",
+            "in": "path",
+            "description": "外出ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/out/query/bystudentusername": {
+      "get": {
+        "tags": [
+          "Out"
+        ],
+        "summary": "获取某个学生外出信息",
+        "description": "传入学生usename，获取外出详细信息",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "studentUsername",
+            "in": "query",
+            "description": "学生username",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/out/save": {
+      "post": {
+        "tags": [
+          "Out"
+        ],
+        "summary": "添加外出信息",
+        "operationId": "saveOut",
+        "description": "传入外出必要信息保存",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "outStudentid",
+            "in": "formData",
+            "description": "用户名（学号）",
+            "example": "152100666",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "outDate",
+            "in": "formData",
+            "description": "外出时间",
+            "example": "Thu Mar 15 2018 11:01:14 GMT+0800",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "outRemark",
+            "in": "formData",
+            "description": "外出意见",
+            "example": "未处理",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+
+    "/power/query/{powerId}": {
+      "get": {
+        "tags": [
+          "Power"
+        ],
+        "summary": "获取电力详细信息",
+        "description": "传入电力ID，获取电力详细信息",
+        "parameters": [
+          {
+            "name": "powerId",
+            "in": "path",
+            "description": "电力ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/power/query/all": {
+      "get": {
+        "tags": [
+          "Power"
+        ],
+        "summary": "获取全部电力详细信息",
+        "description": "传入页码，获取电力详细信息，默认为1",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "pn",
+            "in": "query",
+            "description": "页码",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/power/query/bybuilding": {
+      "get": {
+        "tags": [
+          "Power"
+        ],
+        "summary": "获取对应楼号电力详细信息",
+        "description": "传入楼号，获取电力详细信息",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "buildingId",
+            "in": "query",
+            "description": "宿舍楼号",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/power/save": {
+      "post": {
+        "tags": [
+          "Power"
+        ],
+        "summary": "添加电力信息",
+        "operationId": "savePower",
+        "description": "传入电力信息保存",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "totalconsumption",
+            "in": "formData",
+            "description": "总电量",
+            "example": "2000.0",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "subsidyconsumption",
+            "in": "formData",
+            "description": "补助电量",
+            "example": "30.5",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "payconsumption",
+            "in": "formData",
+            "description": "花费电量",
+            "example": "657.2",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "freeconsumption",
+            "in": "formData",
+            "description": "免费电量",
+            "example": "154.6",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "价格",
+            "example": "252.3",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "powerBuildingId",
+            "in": "formData",
+            "description": "公寓ID",
+            "example": "1",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          },
+          "100": {
+            "description": "处理失败"
+          },
+          "500": {
+            "description": "数据异常"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/power/del/{powerId}": {
+      "delete": {
+        "tags": [
+          "Power"
+        ],
+        "summary": "删除电力信息",
+        "description": "传入电力ID，删除电力",
+        "parameters": [
+          {
+            "name": "powerId",
+            "in": "path",
+            "description": "电力ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    },
+    "/power/update/{powerId}": {
+      "post": {
+        "tags": [
+          "Power"
+        ],
+        "summary": "更新电力信息",
+        "description": "传入电力ID及需更新项",
+        "parameters": [
+          {
+            "name": "powerId",
+            "in": "path",
+            "description": "电力ID",
+            "example": "4",
+            "required": true
+          },
+          {
+            "name": "totalconsumption",
+            "in": "formData",
+            "description": "总电量",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "subsidyconsumption",
+            "in": "formData",
+            "description": "补助电量",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "payconsumption",
+            "in": "formData",
+            "description": "花费电量",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "freeconsumption",
+            "in": "formData",
+            "description": "免费电量",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "价格",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "powerBuildingId",
+            "in": "formData",
+            "description": "公寓ID",
+            "example": "1",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "处理成功"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Student": {
+      "type": "object",
+      "properties": {
+        "studentUsername": {
+          "type": "String",
+          "example": "152100666",
+          "description": "用户名"
+        },
+        "studentDomitoryid": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1"
+        },
+        "studentPassword": {
+          "type": "String",
+          "example": "123456"
+        },
+        "studentName": {
+          "type": "String",
+          "example": "张三丰"
+        },
+        "studentSex": {
+          "type": "String",
+          "example": "男"
+        },
+        "studentClass": {
+          "type": "String",
+          "example": "15炎黄"
+        },
+        "studentState": {
+          "type": "String",
+          "example": "离校"
+        }
+      },
+      "xml": {
+        "name": "Student"
+      }
+    },
+    "Power": {
+      "type": "object",
+      "properties": {
+        "powerId": {
+          "type": "integer",
+          "example": "1"
+        },
+        "totalconsumption": {
+          "type": "number",
+          "format": "double",
+          "example": "500"
+        },
+        "subsidyconsumption": {
+          "type": "number",
+          "format": "double",
+          "example": "0"
+        },
+        "payconsumption": {
+          "type": "number",
+          "format": "double",
+          "example": "0"
+        },
+        "freeconsumption": {
+          "type": "number",
+          "format": "double",
+          "example": "0"
+        },
+        "powerBuildingId": {
+          "type": "integer",
+          "example": "1"
+        }
+      },
+      "xml": {
+        "name": "Power"
+      }
+    }
+  }
+}
+

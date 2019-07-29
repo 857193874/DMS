@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.nicespring.dao.VisitloggerMapper">
+  <resultMap id="BaseResultMap" type="com.moyu.nicespring.entity.Visitlogger">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pageurl" jdbcType="VARCHAR" property="pageurl" />
+    <result column="apiurl" jdbcType="VARCHAR" property="apiurl" />
+    <result column="visitnum" jdbcType="BIGINT" property="visitnum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, pageurl, apiurl, visitnum
+  </sql>
+  <select id="selectByExample" parameterType="com.moyu.nicespring.entity.VisitloggerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from visitlogger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from visitlogger
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from visitlogger
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyu.nicespring.entity.VisitloggerExample">
+    delete from visitlogger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyu.nicespring.entity.Visitlogger">
+    insert into visitlogger (id, pageurl, apiurl, 
+      visitnum)
+    values (#{id,jdbcType=INTEGER}, #{pageurl,jdbcType=VARCHAR}, #{apiurl,jdbcType=VARCHAR}, 
+      #{visitnum,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyu.nicespring.entity.Visitlogger">
+    insert into visitlogger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pageurl != null">
+        pageurl,
+      </if>
+      <if test="apiurl != null">
+        apiurl,
+      </if>
+      <if test="visitnum != null">
+        visitnum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pageurl != null">
+        #{pageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="apiurl != null">
+        #{apiurl,jdbcType=VARCHAR},
+      </if>
+      <if test="visitnum != null">
+        #{visitnum,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyu.nicespring.entity.VisitloggerExample" resultType="java.lang.Long">
+    select count(*) from visitlogger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update visitlogger
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageurl != null">
+        pageurl = #{record.pageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apiurl != null">
+        apiurl = #{record.apiurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitnum != null">
+        visitnum = #{record.visitnum,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update visitlogger
+    set id = #{record.id,jdbcType=INTEGER},
+      pageurl = #{record.pageurl,jdbcType=VARCHAR},
+      apiurl = #{record.apiurl,jdbcType=VARCHAR},
+      visitnum = #{record.visitnum,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyu.nicespring.entity.Visitlogger">
+    update visitlogger
+    <set>
+      <if test="pageurl != null">
+        pageurl = #{pageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="apiurl != null">
+        apiurl = #{apiurl,jdbcType=VARCHAR},
+      </if>
+      <if test="visitnum != null">
+        visitnum = #{visitnum,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyu.nicespring.entity.Visitlogger">
+    update visitlogger
+    set pageurl = #{pageurl,jdbcType=VARCHAR},
+      apiurl = #{apiurl,jdbcType=VARCHAR},
+      visitnum = #{visitnum,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,165 @@
+{
+  "swagger":"2.0",
+  "info":{
+    "description":"这是一个项目实例",
+    "version":"1.0",
+    "title":"宿舍管理系统接口"
+  },
+  "basePath":"/api/v1",
+  "tags": [
+    {
+      "name": "Student",
+      "description": "学生用户接口"
+
+    },
+    {
+      "name": "Admin",
+      "description": "管理员用户接口"
+    },
+    {
+      "name": "Building",
+      "description": "宿舍楼管理接口"
+    },
+    {
+      "name": "Domitory",
+      "description": "宿舍管理接口"
+    },
+    {
+      "name": "Maintain",
+      "description": "宿舍楼管理接口"
+    },
+    {
+      "name": "Out",
+      "description": "外出管理接口"
+    },
+    {
+      "name": "Power",
+      "description": "电力管理接口"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths":{
+    "/student/query/{studentUsername}":{
+      "get":{
+        "tags":["Student"],
+        "summary":"获取学生详细信息",
+        "description":"传入学生用户名，获取学生详细信息",
+        "parameters":[
+          {
+            "name":"studentUsername",
+            "in":"path",
+            "description":"学生username",
+            "required":true
+          }
+        ],
+        "responses":{
+          "200":{
+            "description":"处理成功"
+          }
+        }
+      }
+    },
+    "/student/query/all":{
+      "get":{
+        "tags":["Student"],
+        "summary":"获取全部学生详细信息",
+        "description":"传入学生信息保存",
+        "responses":{
+          "200":{
+            "description":"处理成功"
+          }
+        }
+      }
+    },
+    "/student/save":{
+      "post":{
+        "tags":["Student"],
+        "summary":"添加学生信息",
+        "operationId": "saveStudent",
+        "description":"传入学生用户名，获取学生详细信息",
+        "consumes": [
+
+
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+
+        ],
+        "parameters":[
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Student"
+            }
+        ],
+        "responses":{
+          "200":{
+            "description":"处理成功"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Student": {
+      "type": "object",
+      "properties": {
+        "studentUsername": {
+          "type": "String",
+          "example": "152100666"
+        },
+        "studentDomitoryid": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1"
+        },
+        "studentPassword": {
+          "type": "String",
+          "example": "123456"
+        },
+        "studentName": {
+          "type": "String",
+          "example": "张三丰"
+        },
+        "studentSex": {
+          "type": "String",
+          "example": "男"
+        },
+        "studentClass": {
+          "type": "String",
+          "example": "15炎黄"
+        },
+        "studentState": {
+          "type": "String",
+          "example": "离校"
+        }
+      },
+      "xml": {
+        "name": "Student"
+      }
+    }
+  },
+
+  "consumes":[
+    "application/x-www-form-urlencode"
+  ],
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
+

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.nicespring.dao.DomitoryMapper">
+  <resultMap id="BaseResultMap" type="com.moyu.nicespring.entity.Domitory">
+    <id column="domitory_id" jdbcType="INTEGER" property="domitoryId" />
+    <result column="domitory_buildingid" jdbcType="INTEGER" property="domitoryBuildingid" />
+    <result column="domitory_name" jdbcType="VARCHAR" property="domitoryName" />
+    <result column="domitory_type" jdbcType="VARCHAR" property="domitoryType" />
+    <result column="domitory_number" jdbcType="VARCHAR" property="domitoryNumber" />
+    <result column="domitory_tel" jdbcType="VARCHAR" property="domitoryTel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    domitory_id, domitory_buildingid, domitory_name, domitory_type, domitory_number, 
+    domitory_tel
+  </sql>
+  <select id="selectPrimaryKey"   resultType="java.lang.Integer">
+    select
+    domitory_id
+    from domitory
+
+  </select>
+  <select id="selectByExample" parameterType="com.moyu.nicespring.entity.DomitoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from domitory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from domitory
+    where domitory_id = #{domitoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from domitory
+    where domitory_id = #{domitoryId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyu.nicespring.entity.DomitoryExample">
+    delete from domitory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyu.nicespring.entity.Domitory">
+    insert into domitory (domitory_id, domitory_buildingid, domitory_name, 
+      domitory_type, domitory_number, domitory_tel
+      )
+    values (#{domitoryId,jdbcType=INTEGER}, #{domitoryBuildingid,jdbcType=INTEGER}, #{domitoryName,jdbcType=VARCHAR}, 
+      #{domitoryType,jdbcType=VARCHAR}, #{domitoryNumber,jdbcType=VARCHAR}, #{domitoryTel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyu.nicespring.entity.Domitory">
+    insert into domitory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="domitoryId != null">
+        domitory_id,
+      </if>
+      <if test="domitoryBuildingid != null">
+        domitory_buildingid,
+      </if>
+      <if test="domitoryName != null">
+        domitory_name,
+      </if>
+      <if test="domitoryType != null">
+        domitory_type,
+      </if>
+      <if test="domitoryNumber != null">
+        domitory_number,
+      </if>
+      <if test="domitoryTel != null">
+        domitory_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="domitoryId != null">
+        #{domitoryId,jdbcType=INTEGER},
+      </if>
+      <if test="domitoryBuildingid != null">
+        #{domitoryBuildingid,jdbcType=INTEGER},
+      </if>
+      <if test="domitoryName != null">
+        #{domitoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="domitoryType != null">
+        #{domitoryType,jdbcType=VARCHAR},
+      </if>
+      <if test="domitoryNumber != null">
+        #{domitoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="domitoryTel != null">
+        #{domitoryTel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyu.nicespring.entity.DomitoryExample" resultType="java.lang.Long">
+    select count(*) from domitory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update domitory
+    <set>
+      <if test="record.domitoryId != null">
+        domitory_id = #{record.domitoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.domitoryBuildingid != null">
+        domitory_buildingid = #{record.domitoryBuildingid,jdbcType=INTEGER},
+      </if>
+      <if test="record.domitoryName != null">
+        domitory_name = #{record.domitoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domitoryType != null">
+        domitory_type = #{record.domitoryType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domitoryNumber != null">
+        domitory_number = #{record.domitoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domitoryTel != null">
+        domitory_tel = #{record.domitoryTel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update domitory
+    set domitory_id = #{record.domitoryId,jdbcType=INTEGER},
+      domitory_buildingid = #{record.domitoryBuildingid,jdbcType=INTEGER},
+      domitory_name = #{record.domitoryName,jdbcType=VARCHAR},
+      domitory_type = #{record.domitoryType,jdbcType=VARCHAR},
+      domitory_number = #{record.domitoryNumber,jdbcType=VARCHAR},
+      domitory_tel = #{record.domitoryTel,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyu.nicespring.entity.Domitory">
+    update domitory
+    <set>
+      <if test="domitoryBuildingid != null">
+        domitory_buildingid = #{domitoryBuildingid,jdbcType=INTEGER},
+      </if>
+      <if test="domitoryName != null">
+        domitory_name = #{domitoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="domitoryType != null">
+        domitory_type = #{domitoryType,jdbcType=VARCHAR},
+      </if>
+      <if test="domitoryNumber != null">
+        domitory_number = #{domitoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="domitoryTel != null">
+        domitory_tel = #{domitoryTel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where domitory_id = #{domitoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyu.nicespring.entity.Domitory">
+    update domitory
+    set domitory_buildingid = #{domitoryBuildingid,jdbcType=INTEGER},
+      domitory_name = #{domitoryName,jdbcType=VARCHAR},
+      domitory_type = #{domitoryType,jdbcType=VARCHAR},
+      domitory_number = #{domitoryNumber,jdbcType=VARCHAR},
+      domitory_tel = #{domitoryTel,jdbcType=VARCHAR}
+    where domitory_id = #{domitoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

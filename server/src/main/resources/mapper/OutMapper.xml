@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyu.nicespring.dao.OutMapper">
+  <resultMap id="BaseResultMap" type="com.moyu.nicespring.entity.Out">
+    <id column="out_id" jdbcType="INTEGER" property="outId" />
+    <result column="out_studentid" jdbcType="VARCHAR" property="outStudentid" />
+    <result column="out_date" jdbcType="VARCHAR" property="outDate" />
+    <result column="out_remark" jdbcType="VARCHAR" property="outRemark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    out_id, out_studentid, out_date, out_remark
+  </sql>
+  <select id="selectByExample" parameterType="com.moyu.nicespring.entity.OutExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from intelligentdorm.`out`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from intelligentdorm.`out`
+    where out_id = #{outId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from intelligentdorm.`out`
+    where out_id = #{outId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyu.nicespring.entity.OutExample">
+    delete from intelligentdorm.`out`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyu.nicespring.entity.Out">
+    insert into intelligentdorm.`out` (out_id, out_studentid, out_date,
+      out_remark)
+    values (#{outId,jdbcType=INTEGER}, #{outStudentid,jdbcType=VARCHAR}, #{outDate,jdbcType=VARCHAR}, 
+      #{outRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyu.nicespring.entity.Out">
+    insert into intelligentdorm.`out`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="outId != null">
+        out_id,
+      </if>
+      <if test="outStudentid != null">
+        out_studentid,
+      </if>
+      <if test="outDate != null">
+        out_date,
+      </if>
+      <if test="outRemark != null">
+        out_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="outId != null">
+        #{outId,jdbcType=INTEGER},
+      </if>
+      <if test="outStudentid != null">
+        #{outStudentid,jdbcType=VARCHAR},
+      </if>
+      <if test="outDate != null">
+        #{outDate,jdbcType=VARCHAR},
+      </if>
+      <if test="outRemark != null">
+        #{outRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyu.nicespring.entity.OutExample" resultType="java.lang.Long">
+    select count(*) from intelligentdorm.`out`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update intelligentdorm.`out`
+    <set>
+      <if test="record.outId != null">
+        out_id = #{record.outId,jdbcType=INTEGER},
+      </if>
+      <if test="record.outStudentid != null">
+        out_studentid = #{record.outStudentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outDate != null">
+        out_date = #{record.outDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outRemark != null">
+        out_remark = #{record.outRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update intelligentdorm.`out`
+    set out_id = #{record.outId,jdbcType=INTEGER},
+      out_studentid = #{record.outStudentid,jdbcType=VARCHAR},
+      out_date = #{record.outDate,jdbcType=VARCHAR},
+      out_remark = #{record.outRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyu.nicespring.entity.Out">
+    update intelligentdorm.`out`
+    <set>
+      <if test="outStudentid != null">
+        out_studentid = #{outStudentid,jdbcType=VARCHAR},
+      </if>
+      <if test="outDate != null">
+        out_date = #{outDate,jdbcType=VARCHAR},
+      </if>
+      <if test="outRemark != null">
+        out_remark = #{outRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where out_id = #{outId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyu.nicespring.entity.Out">
+    update intelligentdorm.`out`
+    set out_studentid = #{outStudentid,jdbcType=VARCHAR},
+      out_date = #{outDate,jdbcType=VARCHAR},
+      out_remark = #{outRemark,jdbcType=VARCHAR}
+    where out_id = #{outId,jdbcType=INTEGER}
+  </update>
+</mapper>
