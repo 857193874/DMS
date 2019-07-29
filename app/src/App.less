@@ -1,0 +1,21 @@
+.app {
+  padding: 45px 0 60px 0;
+  :global(.am-navbar) {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+  :global(.fade-enter) {
+    opacity: 0;
+  }
+  :global(.fade-enter-active) {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  :global(.fade-exit-active) {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
+}
